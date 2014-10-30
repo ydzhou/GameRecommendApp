@@ -33,13 +33,30 @@ def get_recently_played_games(steam_id):
     return res['response']['games']
 
 def get_friend_list(steam_id):
+    # un-functionable if user sets its profile to not be public
     steam_id = str(steam_id)
     url = base_url + 'ISteamUser/GetFriendList/v0001/?key=' + steam_API_key + '&steamid=' + steam_id + '&relationship=friend'
     req = urllib2.Request(url)
     response = urllib2.urlopen(req)
     the_page = response.read()
     res = json.loads(the_page)
-    return res['friendslist']['friends']
+    try:
+        return res['friendslist']['friends']
+    except:
+        return None
+
+# Use Steam HTTP API to retrieve game details
+def get_game_details(app_id):
+    app_id = str(app_id)
+    url = 'http://store.steampowered.com/api/appdetails/?appids=' + app_id
+    req = urllib2.Request(url)
+    response = urllib2.urlopen(req)
+    the_page = response.read() 
+    res = json.loads(the_page)
+    if res[app_id]['success'] == False:
+        return None
+    else:
+        return res[app_id]['data']['genres']
 
 # A crawler to fetch game tags
 def get_game_tags(app_id):
@@ -69,20 +86,7 @@ def get_game_tags(app_id):
     for i in range(4):
         res.append({tags[i]['tagid']: tags[i]['count']})
     return res
-        
 
-# Use Steam HTTP API to retrieve game details
-def get_game_details(app_id):
-    app_id = str(app_id)
-    url = 'http://store.steampowered.com/api/appdetails/?appids=' + app_id
-    req = urllib2.Request(url)
-    response = urllib2.urlopen(req)
-    the_page = response.read() 
-    res = json.loads(the_page)
-    if res[app_id]['success'] == False:
-        return None
-    else:
-        return res[app_id]['data']['genres']
 
 if __name__ == "__main__":
     #get_friend_list(my_steam_id)
