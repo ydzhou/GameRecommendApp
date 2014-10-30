@@ -1,0 +1,13 @@
+// Steam Genres Summary
+//
+// Action: 1
+// Adventure: 25
+// Casual: 4
+// Racing: 9
+// RPG: 3
+// Simulation: 28
+// Sports: 18
+// Strategy: 2
+// Massively Multiplayer: 29
+// Free-to-Play: 37
+// Indie: 23
