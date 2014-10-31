@@ -1,0 +1,52 @@
+{% extends 'recom/index.html' %}
+
+{% block submit %}
+{% if success %}
+<header>
+	<div class="container">
+		<h2>We are digging out games you are missing</h2>
+		<h2>Just a minute</h2>
+	</div>
+</header>
+<div class="content style4 featured">
+	<div class="container small">
+		<form action="/recom/submit" method="post">{% csrf_token %}
+			<div class="row half">
+				<div class="12u"><input type="text" name="steamID" value="{{ steamid }}" /></div>
+			</div>
+			<div class="row">
+				<div class="12u">
+					<ul class="actions">
+						<li><input type="submit" class="button" value="Check Now" /></li>
+						<li><input type="reset" class="button alt" value="Clear" /></li>
+					</ul>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{% else %}
+<header>
+	<div class="container">
+		<h2>Sorry, we cannot process your Steam profile</h2>
+	</div>
+</header>
+<div class="content style4 featured">
+	<div class="container small">
+		<form action="/recom/submit" method="post">{% csrf_token %}
+			<div class="row">
+				<div class="12u">
+					<p> There are those possible reasons that prevent us to fetch your Steam profile: </p>
+					<ul>
+						<li>You steam ID is not valid. Please double check the ID you have typed in</li>
+						<li>You steam profile is not set to public. We cannot help you out if everything about you is secrect. :D</li>
+						<li>You dont have a friend, or dont own a game on Steam. The truth is harsh though.</li>
+					</ul>
+					<a href="{% url 'recom:recompage' %}" class="button scrolly">Re-type Steam ID</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{% endif %}
+{% endblock %}

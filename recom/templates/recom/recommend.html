@@ -32,11 +32,10 @@
 					<h2>Games you are missing, yet you friends cannot stop playing</h2>
 				</div>
 			</header>
-			<div class="content dark">
+				{% for app in recom_apps %}
+				<div class="content dark">
 				<div class="container">
 					<div class="row half">
-						{% for app in recom_apps %}
-
 							<div class="8u">
 								<section>
 								<h3>{{ app.name }}</h3>
@@ -44,20 +43,18 @@
 								{{ app.descrip }}
 							</div>
 				    		<div class="4u">
-				            	<a href = {{ app.url }} class="image fit"><img src={{ app.img }} alt="" /></a>
-								<p> </br> Metacritic Score: {{ app.score }} </br>
-									Recommendations: {{ app.recom }}
-								</p>
 								<a href={{ app.url }} class="button scrolly">Check it on Steam</a>
+								<p>METACRITIC SCORE: {{ app.score }}</p>
+				            	<a href = {{ app.url }} class="image fit"><img src={{ app.img }} alt="" /></a>
 				        	</div>
-						
-						{% endfor %}
 					</div>
 				</div>
-			</div>
+				</div>
+				{% endfor %}
 		</section>
 
 		<!-- Footer -->
+		<a href="{% url 'recom:recompage' %}" class="button scrolly">Back to Home</a>
 			<section id="footer">
 				<ul class="icons">
 					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>

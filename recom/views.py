@@ -7,8 +7,8 @@ TEST = True
 
 def recompage(request):
     if request.method == 'GET':
-        return render(request, 'recom/index.html')
-        
+        return render(request, 'recom/steamID.html')
+
 def submit(request):
     if request.method == 'POST':
         form = UserSteamIDForm(request.POST)
@@ -16,20 +16,17 @@ def submit(request):
             posted_data = form.cleaned_data
             user_steamid = posted_data['steamID']
             if len(user_steamid)!=17 or user_steamid.isdigit() == False:
-                lenErr = (len(user_steamid)!=17)
-                digErr = user_steamid.isdigit()
+                return render(request, 'recom/submit.html', {'success': False})
+            else:
+                recom_apps = Recom.get_recommended_games(user_steamid)    
+                #recom_apps = [{'name':'YellowStar', 'url':'http://store.steampowered.com/app/65980', 'img':'http://cdn.akamai.steamstatic.com/steam/apps/65980/header.jpg?t=1414514300', 'descrip':"dafasdfasf afsdfasdf fasdfasfadsf a ads fadfa dadfafasdfasfasfasdfd fsadfasdfasf fadsf asdf asdf asf adsfads af adsfadsfadsfa asdf asda"}, {'name':'YellowStar', 'url':'http://store.steampowered.com/app/65980', 'img':'http://cdn.akamai.steamstatic.com/steam/apps/65980/header.jpg?t=1414514300', 'descrip':"dafasdfasf afsdfasdf fasdfasfadsf a ads fadfa dadfafasdfasfasfasdfd fsadfasdfasf fadsf asdf asdf asf adsfads af adsfadsfadsfa asdf asda"}]
+        
+                if recom_apps == []:
+                    return render(request, 'recom/submit.html', {'success': False})
+        
                 content = {
-                    'lenErr': lenErr,
-                    'digErr': digErr
+                    'recom_apps' : recom_apps
                 }
-                return render(request, 'recom/error.html', content)
-            recom_apps = Recom.get_recommended_games(user_steamid)
             
-            #recom_apps = [{'name':'YellowStar', 'url':'http://store.steampowered.com/app/65980', 'img':'http://cdn.akamai.steamstatic.com/steam/apps/65980/header.jpg?t=1414514300', 'descrip':"dafasdfasf afsdfasdf fasdfasfadsf a ads fadfa dadfafasdfasfasfasdfd fsadfasdfasf fadsf asdf asdf asf adsfads af adsfadsfadsfa asdf asda"}]
-            
-            content = {
-                'recom_apps' : recom_apps
-            }
-            
-            return render(request, 'recom/recommend.html', content)
-        return render(request, 'recom/error.html')
+                return render(request, 'recom/recommend.html', content)
+        return render(request, 'recom/submit.html', {'success': False})

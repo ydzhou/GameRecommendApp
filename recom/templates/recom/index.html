@@ -35,44 +35,20 @@
 			
 		<!-- First -->
 			<section id="first" class="main">
-				<header>
-					<div class="container">
-						<h3>Get bored with your games and try to look for new one?</h3>
-						<h3>Get lost in untrustful recommendations from GameSpot, IGN and everywhere?</h3>
-						<h2>Let your best friends recommend the game they love!</h2>
-						<p>First, type in your steam ID and take a minute break</br>You can find out your steam ID by checking your steam profile url. The last 17-digit string represents your steam ID.</p>
-					</div>
-					<div class="content style4 featured">
-						<div class="container small">
-							<form action="/recom/submit" method="post">{% csrf_token %}
-								<div class="row half">
-									<div class="12u"><input type="text" name="steamID" value="{{ steamid }}" /></div>
-								</div>
-								<div class="row">
-									<div class="12u">
-										<ul class="actions">
-											<li><input type="submit" class="button" value="Check Now" /></li>
-											<li><input type="reset" class="button alt" value="Clear" /></li>
-										</ul>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</header>
-				</section>
+				{% block steamID %}
+				{% endblock %}
+				{% block submit %}
+				{% endblock %}
 			</section>
 
 		<!-- Footer -->
 			<section id="footer">
 				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+					<li><a href="https://github.com/ydzhou" class="icon fa-github"><span class="label">GitHub</span></a></li>
 				</ul>
 				<div class="copyright">
 					<ul class="menu">
-						<li>&copy; Y.Zhou All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; Y.Zhou All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a> and Y.Zhou </li>
 					</ul>
 				</div>
 			</section>

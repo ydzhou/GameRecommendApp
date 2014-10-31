@@ -6,9 +6,10 @@ import generateUserInfo as G
 import getInfoFromSteam
 import math
 
-my_steam_id = 76561198039618528
+my_steam_id = 76561198028487943
 #my_steam_id = 76561198060149220
 # HarderQ 76561198039618528
+# zjn 76561198028487943
 
 def get_recommended_games(steam_id):
     try:
@@ -79,6 +80,8 @@ def recommend_games(steam_id):
     for app in app_predict:
         if (i>=3): 
             break
+        else:
+            i += 1
         recom_apps.append(app[0])
     return recom_apps
     
@@ -89,7 +92,7 @@ def get_trending_games_played_by_friends(steam_id, num_of_friend):
     all_apps = {}
     num = 0
     for f in friends:
-        #print 'collect info from friend', f
+        print 'collect info from friend', f
         single_user_apps = G.get_recently_played_games(f)
         if single_user_apps == None:
             continue
@@ -213,8 +216,8 @@ def bitvecToList(bitvec, n):
 
 # Test Purpose
 if __name__=="__main__":
-    #print get_recommended_games(my_steam_id)
-    get_trending_games_played_by_friends(my_steam_id, 40)
+    print get_recommended_games(my_steam_id)
+    #get_trending_games_played_by_friends(my_steam_id, 40)
     #print recommend_games(my_steam_id)
     #print get_trending_games_played_by_friends(my_steam_id, 5)
     #print generate_IR_training_data(my_steam_id)

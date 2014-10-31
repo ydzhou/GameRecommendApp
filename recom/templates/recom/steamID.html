@@ -1,0 +1,29 @@
+{% extends 'recom/index.html' %}
+
+{% block steamID %}
+<header>
+	<div class="container">
+		<h3>Get bored with your games and try to look for new one?</h3>
+		<h3>Get lost in untrustful recommendations flooding from everywhere?</h3>
+		<h2>Let your best friends recommend the game they love!</h2>
+		<p>Please type in your Steam ID</br>You can find out your steam ID by check your steam profile url. The last 17-digit string represents your steam ID.</p>
+	</div>
+</header>
+<div class="content style4 featured">
+	<div class="container small">
+		<form action="/recom/submit" method="post">{% csrf_token %}
+			<div class="row half">
+				<div class="12u"><input type="text" name="steamID" value="{{ steamid }}" /></div>
+			</div>
+			<div class="row">
+				<div class="12u">
+					<ul class="actions">
+						<li><input type="submit" class="button" value="Check Now" /></li>
+						<li><input type="reset" class="button alt" value="Clear" /></li>
+					</ul>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
