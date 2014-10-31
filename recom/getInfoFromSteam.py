@@ -6,6 +6,7 @@ import urllib2
 import json
 import requests
 import datetime
+import re
 
 steam_API_key = 'C1A6C90A09B7FCE900DD0B7F2EFAA324'
 base_url = 'http://api.steampowered.com/'
@@ -75,14 +76,18 @@ def get_game_info(app_ids):
             app_info.append(None)
             continue
         r = r['data']
+        TAG_RE = re.compile(r'<[^>]+>')
+        r_descript = TAG_RE.sub('', r['detailed_description'])
         app_info = {}
+        app_info['app_id'] = app_id
         app_info['name'] = r['name']
-        app_info['descrip'] = r['detailed_description']
+        app_info['descrip'] = r_descript
         app_info['img'] = r['header_image']
         app_info['score'] = r['metacritic']['score']
         app_info['recom'] = r['recommendations']['total']
         app_info['url'] = 'http://store.steampowered.com/app/' + app_id
-        apps_info.append({app_id:app_info})
+        apps_info.append(app_info)
+        print app_info['descrip']
     return apps_info
 
 # A crawler to fetch game tags
@@ -118,4 +123,4 @@ def get_game_tags(app_id):
 if __name__ == "__main__":
     #get_friend_list(my_steam_id)
     #get_recently_played_games(76561198068784324)
-    print get_game_info([570, 730])
+    get_game_info([570, 730])
