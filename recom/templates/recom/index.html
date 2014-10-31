@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<!--
+	Tessellate by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'recom/css/skel.css' %}" />
+<link rel="stylesheet" href="{% static 'recom/css/style.css' %}" />
+<link rel="stylesheet" href="{% static 'recom/css/style-wide.css' %}" />
+
+<html>
+	<head>
+		<title>Games You are Missing</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="A new way to explore land of surprise on Steam" />
+		<meta name="keywords" content="game recommendation, steampowered, trending games, recommender" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="{% static 'js/jquery.min.js' %}"></script>
+		<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'js/skel.min.js' %}"></script>
+		<script src="{% static 'js/init.js' %}"></script>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+			<section id="header" class="dark">
+				<header>
+					<h1>A Missing Game Recommender for Steam Users</h1>
+					<p>Recommending games your friends on steam are falling love with, while you are missing</a></p>
+				</header>
+			</section>
+			
+		<!-- First -->
+			<section id="first" class="main">
+				<header>
+					<div class="container">
+						<h3>Get bored with your games and try to look for new one?</h3>
+						<h3>Get lost in untrustful recommendations from GameSpot, IGN and everywhere?</h3>
+						<h2>Let your best friends recommend the game they love!</h2>
+						<p>First, type in your steam ID and take a minute break</br>You can find out your steam ID by checking your steam profile url. The last 17-digit string represents your steam ID.</p>
+					</div>
+					<div class="content style4 featured">
+						<div class="container small">
+							<form action="/recom/submit" method="post">{% csrf_token %}
+								<div class="row half">
+									<div class="12u"><input type="text" name="steamID" value="{{ steamid }}" /></div>
+								</div>
+								<div class="row">
+									<div class="12u">
+										<ul class="actions">
+											<li><input type="submit" class="button" value="Check Now" /></li>
+											<li><input type="reset" class="button alt" value="Clear" /></li>
+										</ul>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</header>
+				</section>
+			</section>
+
+		<!-- Footer -->
+			<section id="footer">
+				<ul class="icons">
+					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+				<div class="copyright">
+					<ul class="menu">
+						<li>&copy; Y.Zhou All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</section>
+
+	</body>
+</html>
