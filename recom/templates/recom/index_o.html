@@ -15,11 +15,13 @@
 		<div id="steamIDForm">
 			<p>Please type in your 16-length Steam ID</p>
 			<form action="/recom/submit" method="post">{% csrf_token %}
-				Steam ID: <input type="text" name="steam_id"></br>
+				Steam ID: <input type="text" name="steamID" value="{{ steamid }}"></br>
 				<input type="submit" value="check out">
 			</form>
 		</div>
 		{% block results %}
+		{% endblock %}
+		{% block error %}
 		{% endblock %}
 	</body>
 </html>

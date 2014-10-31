@@ -10,6 +10,14 @@ my_steam_id = 76561198039618528
 #my_steam_id = 76561198060149220
 # HarderQ 76561198039618528
 
+def get_recommended_games(steam_id):
+    try:
+        recommended_app_ids = recommend_games(steam_id)
+    except:
+        return []
+    recommended_app_info = getInfoFromSteam.get_game_info(recommended_app_ids)
+    return recommended_app_info
+    
 def recommend_games(steam_id):
     recom_apps = []
     
@@ -34,6 +42,7 @@ def recommend_games(steam_id):
 
     owned_apps = G.get_all_games(steam_id)
     trending_apps = get_trending_games_played_by_friends(steam_id, 40)
+    
     if trending_apps == None:
         return recom_apps # None
     
@@ -80,7 +89,7 @@ def get_trending_games_played_by_friends(steam_id, num_of_friend):
     all_apps = {}
     num = 0
     for f in friends:
-        print 'collect info from friend', f
+        #print 'collect info from friend', f
         single_user_apps = G.get_recently_played_games(f)
         if single_user_apps == None:
             continue
@@ -96,7 +105,7 @@ def get_trending_games_played_by_friends(steam_id, num_of_friend):
         else:
             num += 1
     sorted_all_apps = sorted(all_apps.items(), key=itemgetter(1), reverse=True)
-    print sorted_all_apps
+    #print sorted_all_apps
     res = [a[0] for a in sorted_all_apps]
     return res
     
@@ -138,7 +147,7 @@ def generate_IR_training_data(steam_id):
             app_info_re[genres_bitvec] = [app[1], app[2]]
     
     # print app_info_re
-    print owned_genres_bitvec_single
+    #print owned_genres_bitvec_single
     
     max_playtime = 0
     max_playtime_2weeks = 0
@@ -204,6 +213,8 @@ def bitvecToList(bitvec, n):
 
 # Test Purpose
 if __name__=="__main__":
-    print recommend_games(my_steam_id)
+    #print get_recommended_games(my_steam_id)
+    get_trending_games_played_by_friends(my_steam_id, 40)
+    #print recommend_games(my_steam_id)
     #print get_trending_games_played_by_friends(my_steam_id, 5)
     #print generate_IR_training_data(my_steam_id)
