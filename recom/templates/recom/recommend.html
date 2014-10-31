@@ -1,0 +1,12 @@
+{% extends 'recom/index.html' %}
+
+{% block results %}
+<div id="recomApps">
+	<h2> Games you wanna check out </h2>
+	{% for app in recom_apps %}
+	<div id="content">
+		<p> App ID: {{ app.app_id }} </p>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}
