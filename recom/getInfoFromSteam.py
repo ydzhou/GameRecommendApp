@@ -45,7 +45,7 @@ def get_friend_list(steam_id):
     except:
         return None
 
-# Use Steam HTTP API to retrieve game details
+# Use Steam HTTP API to retrieve game details about genres
 def get_game_details(app_id):
     app_id = str(app_id)
     url = 'http://store.steampowered.com/api/appdetails/?appids=' + app_id
@@ -55,8 +55,35 @@ def get_game_details(app_id):
     res = json.loads(the_page)
     if res[app_id]['success'] == False:
         return None
-    else:
-        return res[app_id]['data']['genres']
+    return res[app_id]['data']['genres']
+
+# retrieve game info related to title, content, price, and so on        
+def get_game_info(app_ids):
+    url = 'http://store.steampowered.com/api/appdetails/?appids='
+    for app_id in app_ids:
+        app_id = str(app_id)
+        url += (app_id + ',')
+    req = urllib2.Request(url)
+    response = urllib2.urlopen(req)
+    the_page = response.read() 
+    res = json.loads(the_page)
+    apps_info = []
+    for app_id in app_ids:
+        app_id = str(app_id)
+        r = res[app_id]
+        if r['success'] == False:
+            app_info.append(None)
+            continue
+        r = r['data']
+        app_info = {}
+        app_info['name'] = r['name']
+        app_info['descrip'] = r['detailed_description']
+        app_info['img'] = r['header_image']
+        app_info['score'] = r['metacritic']['score']
+        app_info['recom'] = r['recommendations']['total']
+        app_info['url'] = 'http://store.steampowered.com/app/' + app_id
+        apps_info.append({app_id:app_info})
+    return apps_info
 
 # A crawler to fetch game tags
 def get_game_tags(app_id):
@@ -90,4 +117,5 @@ def get_game_tags(app_id):
 
 if __name__ == "__main__":
     #get_friend_list(my_steam_id)
-    get_recently_played_games(76561198068784324)
+    #get_recently_played_games(76561198068784324)
+    print get_game_info([570, 730])

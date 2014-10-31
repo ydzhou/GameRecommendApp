@@ -1,5 +1,5 @@
 """
-Django settings for GameRecomApp project.
+Django settings for GameRecom project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')ey)rjk5_6x%-7s(39@mln-x5rw-u8#ju09qw+mq(1v-57fpew'
+SECRET_KEY = '#%(v&056w_*x2p%@js4e#*&b#srm9diz+)7t_$e6r7lc5_n(k$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,7 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'GameRecomForSteam',
+    'recom',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,9 +49,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'GameRecomApp.urls'
+ROOT_URLCONF = 'GameRecom.urls'
 
-WSGI_APPLICATION = 'GameRecomApp.wsgi.application'
+WSGI_APPLICATION = 'GameRecom.wsgi.application'
 
 
 # Database

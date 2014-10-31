@@ -3,9 +3,10 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'GameRecomApp.views.home', name='home'),
+    # url(r'^$', 'GameRecom.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
-    url(r'^GameRecomForSteam', include('GameRecomForSteam.urls')),
+    
+    url(r'^recom/', include('recom.urls', namespace='recom')),
     url(r'^admin/', include(admin.site.urls)),
+    
 )

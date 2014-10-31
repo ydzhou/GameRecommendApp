@@ -41,58 +41,19 @@ def get_user_info_genres_based(steam_id):
         app_info = [app_id, playtime_2weeks, playtime, app_detail]
         user_info.append(app_info)
         max_playtime = max(max_playtime, playtime)
+    
+    if max_playtime == 0:
+        return None
+    
     user_info.sort(key=itemgetter(2))
-    user_info_t = []
-    for u in user_info:
-        if float(u[2])/max_playtime > 0.1 or u[1] > 0:
-            user_info_t.append(u)
+    user_info_t = user_info
+    #for u in user_info:
+    #    if float(u[2])/max_playtime >= 0 or u[1] > 0:
+    #        user_info_t.append(u)
     #with open(filename, 'a') as f:
     #    f.write("\n")
     #    json.dump({steam_id : user_info}, f)
     return user_info_t
-
-
-# input vector: a bit-map for genre
-# output vector: playtime-based metric scaled into [0, 1]
-def generate_IR_training_data(steam_id):
-    xt = [] # input
-    yt = [] # target
-
-    steam_id = str(steam_id)
-    app_info = get_user_info_genres_based(steam_id)
-    max_playtime = 0
-    max_playtime_2weeks = 0
-    total_num_of_genres_ids = get_genres_index('', 2)
-    
-    for app in app_info:
-        app_id = app[0]
-        app_detail = app[3]
-        xt_app = []
-        for i in range(total_num_of_genres_ids):
-            xt_app.append(0)
-        for app_genres in app_detail:
-            genres_id = app_genres['id']
-            pos = get_genres_index(genres_id, 1)
-            if pos >= 0:
-                xt_app[pos] = 1
-        xt.append(xt_app)
-        max_playtime = max(max_playtime, app[2])
-        max_playtime_2weeks = max(max_playtime_2weeks, app[1])
-
-    for app in app_info:
-        playtime_n = float(app[2])/max_playtime
-        playtime_2weeks_n = float(app[1])/max_playtime_2weeks
-        pi = 3.1416
-        yt_app = math.tanh(playtime_n*pi)
-        yt_app *= math.tanh(playtime_2weeks_n*pi)/2 + 0.5
-        if yt_app < (float(app[1])/app[2]):
-            yt_app = float(app[1])/app[2]
-        yt.append(yt_app)
-        
-    #print xt
-    #print yt
-    
-    return [xt, yt]
 
 def get_friends(steam_id):
     friend_info = getInfoFromSteam.get_friend_list(steam_id)
