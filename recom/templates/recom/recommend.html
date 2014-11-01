@@ -36,15 +36,17 @@
 				<div class="content dark">
 				<div class="container">
 					<div class="row half">
+							<div class="12u">
+								<div align="center"><h3>{{ app.name }}</h3></div>
+							</div>
 							<div class="8u">
 								<section>
-								<h3>{{ app.name }}</h3>
+								<p>METACRITIC SCORE: {{ app.score }}</p>
+								<p>{{ app.descrip }}</p>
 								</section>
-								{{ app.descrip }}
 							</div>
 				    		<div class="4u">
 								<a href={{ app.url }} class="button scrolly">Check it on Steam</a>
-								<p>METACRITIC SCORE: {{ app.score }}</p>
 				            	<a href = {{ app.url }} class="image fit"><img src={{ app.img }} alt="" /></a>
 				        	</div>
 					</div>
@@ -57,9 +59,7 @@
 		<a href="{% url 'recom:recompage' %}" class="button scrolly">Back to Home</a>
 			<section id="footer">
 				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+					<li><a href="https://github.com/ydzhou/" class="icon fa-github"><span class="label">GitHub</span></a></li>
 				</ul>
 				<div class="copyright">
 					<ul class="menu">

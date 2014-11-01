@@ -819,9 +819,9 @@
 		margin: 0;
 		background-image:			url('images/overlay.png'),			url('../images/header.jpg');
 		background-size:			auto,								cover;
-		background-position:		top left,							center center;
+		background-position:		top left,							top left;
 		background-repeat:			repeat,								no-repeat;
-		padding: 10em 0 10em 0;
+		padding: 8em 0 8em 0;
 		text-align: center;
 		color: #fff;
 	}
@@ -886,8 +886,8 @@
 
 		.main > .content
 		{
-			padding: 1em 0 1em 0;
-			font-size: 0.8em;
+			padding: 0 0 1.0em 0;
+			font-size: 1.0em;
 		}
 
 			.main > .content > .container
@@ -897,19 +897,24 @@
 			.main > .content h3
 			{
 				font-size: 2em;
-				font-weight: 200;
+				font-weight: 100;
 			}
 			
 			.main > .content h4
 			{
 				font-size: 1.5em;
-				font-weight: 200;
+				font-weight: 100;
 			}
 
 			.main > .content.dark
 			{
 				background: #6C6C6D;
-				line-height: 110%;
+				line-height: 150%;
+			}
+			
+			.main > .content.dark h3
+			{
+				padding: 1em 0 0 0;
 			}
 			
 			.main > .content.style1

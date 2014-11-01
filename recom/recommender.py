@@ -42,7 +42,7 @@ def recommend_games(steam_id):
     #print err/11
 
     owned_apps = G.get_all_games(steam_id)
-    trending_apps = get_trending_games_played_by_friends(steam_id, 40)
+    trending_apps = get_trending_games_played_by_friends(steam_id, 10)
     
     if trending_apps == None:
         return recom_apps # None
