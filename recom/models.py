@@ -7,12 +7,16 @@ class UserSteamIDForm(forms.Form):
 # Database to store app and user information
 
 class App(models.Model):
-    app_id = models.CharField(max_length=10)
+    appid = models.CharField(max_length=20)
     name = models.CharField(max_length=100)
     descript = models.TextField()
     img = models.TextField()
     score = models.IntegerField()
-    genres = models.CharField(max_length=200)
+    genres = models.CharField(max_length=200, default='[]')
+    publisher = models.CharField(max_length=100, default='NA')
+    release_date = models.CharField(max_length=50, default='NA')
+    #categories = models.TextField(default='NA')
+    url = models.TextField(default='NA')
     def __unicode__(self):
         return self.app_id
     
@@ -27,5 +31,3 @@ class UserOwnedGames(models.Model):
     app = models.ManyToManyField(App)
     playtime = models.IntegerField()
     playtime_2weeks = models.IntegerField()
-    def __unicode__(self):
-        return self
