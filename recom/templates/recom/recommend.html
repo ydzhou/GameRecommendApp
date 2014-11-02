@@ -29,7 +29,7 @@
 		<section id="first" class="main">
 			<header>
 				<div class="container">
-					<h2>Games you are missing, yet you friends cannot stop playing</h2>
+					<h2>Games you are missing, yet you friends are loving</h2>
 				</div>
 			</header>
 				{% for app in recom_apps %}
@@ -41,13 +41,17 @@
 							</div>
 							<div class="8u">
 								<section>
-								<p>METACRITIC SCORE: {{ app.score }}</p>
-								<p>{{ app.descrip }}</p>
+								<p>{{ app.descript }}</p>
 								</section>
 							</div>
 				    		<div class="4u">
 								<a href={{ app.url }} class="button scrolly">Check it on Steam</a>
 				            	<a href = {{ app.url }} class="image fit"><img src={{ app.img }} alt="" /></a>
+								<ul>
+									<li>Publisher: {{ app.publisher }}</li>
+									<li>Release Date: {{ app.release_date }}</li>
+									<li>Metacritic Score: {{ app.score }}</li>
+								</ul>
 				        	</div>
 					</div>
 				</div>
@@ -63,7 +67,7 @@
 				</ul>
 				<div class="copyright">
 					<ul class="menu">
-						<li>&copy; Y.Zhou All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; Albert Y.Zhou All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a> and Y.Zhou</li>
 					</ul>
 				</div>
 			</section>

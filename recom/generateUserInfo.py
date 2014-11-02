@@ -6,9 +6,11 @@ my_steam_id = 76561198039618528
 
 from operator import itemgetter
 import json
-import getInfoFromSteam
+from recom import getInfoFromSteam
 import os
 import math
+import re
+from recom.models import App
 
 def get_user_info_genres_based(steam_id):
     # TODO: update user info via get_recently_played_game
@@ -80,6 +82,39 @@ def get_all_games(steam_id):
         res.append(app['appid'])
     return res
 
+# preferred one to manage app information
+def get_app_info_database_based(app_ids):
+    # TODO: add game tags to game_detail
+    apps_info = []
+    for app_id in app_ids:
+        try:
+            app_info_in_db = App.objects.get(appid__exact=app_id)
+            app_info = {}
+            app_info['app_id'] = app_info_in_db.appid
+            app_info['name'] = app_info_in_db.name
+            app_info['descript'] = app_info_in_db.descript
+            app_info['img'] = app_info_in_db.img
+            app_info['publisher'] = app_info_in_db.publisher
+            app_info['release_date'] = app_info_in_db.release_date
+            app_info['score'] = app_info_in_db.score
+            app_info['url'] = app_info_in_db.url
+        except:
+            app_info = getInfoFromSteam.get_game_info(app_id)
+            new_app = App(
+                appid=app_info['app_id'],
+                name=app_info['name'],
+                descript=app_info['descript'],
+                img=app_info['img'],
+                publisher=app_info['publisher'],
+                release_date=app_info['release_date'],
+                score=app_info['score'],
+                url=app_info['url']
+            )
+            new_app.save()
+        apps_info.append(app_info)
+    return apps_info
+    
+# get app genres info from json file    
 def get_app_details(app_id):
     # TODO: add game tags to game_detail
     app_id = str(app_id)
