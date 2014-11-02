@@ -14,7 +14,7 @@
 
 	body {
 		/* min-width: (containers) */
-		min-width: 1200px;
+		min-width: 900px;
 	}
 
 	.container {
@@ -22,7 +22,7 @@
 		margin-right: auto;
 		
 		/* width: (containers) */
-		width: 1200px;
+		width: 900px;
 	}
 
 	/* Modifiers */
@@ -39,7 +39,7 @@
 			max-width: 1500px;
 
 			/* min-width: (containers); */
-			min-width: 1200px;
+			min-width: 900px;
 		}
 
 /* Grid */

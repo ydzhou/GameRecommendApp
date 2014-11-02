@@ -17,7 +17,7 @@ def submit(request):
             user_steamid = posted_data['steamID']
             if len(user_steamid)!=17 or user_steamid.isdigit() == False:
                 return render(request, 'recom/submit.html', {'success': False})
-            Recom.generate_recommended_game_info(user_steamid)
+            Recom.generate_recommended_game_info_threaded(user_steamid)
             return render(request, 'recom/submit.html', {'success': True})
         return render(request, 'recom/submit.html', {'success': False})
         
