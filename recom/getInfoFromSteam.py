@@ -7,6 +7,9 @@ import json
 import requests
 import datetime
 import re
+import threading
+import Queue
+import datetime
 
 steam_API_key = 'C1A6C90A09B7FCE900DD0B7F2EFAA324'
 base_url = 'http://api.steampowered.com/'
@@ -58,9 +61,29 @@ def get_game_details(app_id):
         return None
     return res[app_id]['data']['genres']
 
-# retrieve game info related to title, content, price, and so on        
-    
+def get_game_details_threaded(app_ids):
+    urls = []
+    for app_id in app_ids:
+        url = 'http://store.steampowered.com/api/appdetails/?appids=' + app_id
+        urls.append(url) 
+    res = Queue.Queue()
+    threads = [threading.Thread(target=fetch_single_game, args=(url, res)) for url in urls]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    print res
 
+def fetch_single_game(url, queue):
+    the_page = urllib2.urlopen(url).read()
+    res = json.loads(the_page)
+    res = res.values()
+    try:
+        queue.put(res['data']['genres'])
+    except:
+        queue.put(None)
+
+# retrieve game info related to title, content, price, and so on        
 def get_game_info(app_ids):
     #return [{'ap_id':'570', 'name':'dota', 'descrip':'dafasf', 'img':'', 'score':'0'}]
     base_url = 'http://store.steampowered.com/api/appdetails/?appids='
@@ -128,4 +151,11 @@ def get_game_tags(app_id):
 if __name__ == "__main__":
     #get_friend_list(my_steam_id)
     #get_recently_played_games(76561198068784324)
-    get_game_info([113200, 105600, 240])
+    #get_game_info([113200, 105600, 240])
+    tstart = datetime.datetime.now()
+    get_game_details('570')
+    get_game_details('730')
+    print datetime.datetime.now() - tstart
+    tstart = datetime.datetime.now()
+    get_game_details_threaded(['570','730'])
+    print datetime.datetime.now() - tstart

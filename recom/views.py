@@ -17,16 +17,23 @@ def submit(request):
             user_steamid = posted_data['steamID']
             if len(user_steamid)!=17 or user_steamid.isdigit() == False:
                 return render(request, 'recom/submit.html', {'success': False})
-            else:
-                recom_apps = Recom.get_recommended_games(user_steamid)    
-                #recom_apps = [{'name':'YellowStar', 'url':'http://store.steampowered.com/app/65980', 'img':'http://cdn.akamai.steamstatic.com/steam/apps/65980/header.jpg?t=1414514300', 'descrip':"dafasdfasf afsdfasdf fasdfasfadsf a ads fadfa dadfafasdfasfasfasdfd fsadfasdfasf fadsf asdf asdf asf adsfads af adsfadsfadsfa asdf asda"}, {'name':'YellowStar', 'url':'http://store.steampowered.com/app/65980', 'img':'http://cdn.akamai.steamstatic.com/steam/apps/65980/header.jpg?t=1414514300', 'descrip':"dafasdfasf afsdfasdf fasdfasfadsf a ads fadfa dadfafasdfasfasfasdfd fsadfasdfasf fadsf asdf asdf asf adsfads af adsfadsfadsfa asdf asda"}]
-        
-                if recom_apps == []:
-                    return render(request, 'recom/submit.html', {'success': False})
-        
-                content = {
-                    'recom_apps' : recom_apps
-                }
-            
-                return render(request, 'recom/recommend.html', content)
+            Recom.generate_recommended_game_info(user_steamid)
+            return render(request, 'recom/submit.html', {'success': True})
         return render(request, 'recom/submit.html', {'success': False})
+        
+def result(request):
+    if request.method == 'GET':
+        res = Recom.get_recommended_game_info()
+        success = res[0]
+        if success == 0:
+            return render(request, 'recom/submit.html', {'success': True})
+        elif success == -1:
+            return render(request, 'recom/submit.html', {'success': False})
+        recom_apps = res[1]
+        #recom_apps = [{'name':'YellowStar', 'url':'http://store.steampowered.com/app/65980', 'img':'http://cdn.akamai.steamstatic.com/steam/apps/65980/header.jpg?t=1414514300', 'descrip':"dafasdfasf afsdfasdf fasdfasfadsf a ads fadfa dadfafasdfasfasfasdfd fsadfasdfasf fadsf asdf asdf asf adsfads af adsfadsfadsfa asdf asda"}, {'name':'YellowStar', 'url':'http://store.steampowered.com/app/65980', 'img':'http://cdn.akamai.steamstatic.com/steam/apps/65980/header.jpg?t=1414514300', 'descrip':"dafasdfasf afsdfasdf fasdfasfadsf a ads fadfa dadfafasdfasfasfasdfd fsadfasdfasf fadsf asdf asdf asf adsfads af adsfadsfadsfa asdf asda"}]
+        if recom_apps == []:
+            return render(request, 'recom/submit.html', {'success': False})
+        content = {
+            'recom_apps' : recom_apps
+        }
+        return render(request, 'recom/recommend.html', content)

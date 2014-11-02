@@ -4,27 +4,11 @@
 {% if success %}
 <header>
 	<div class="container">
-		<h2>We are digging out games you are missing</h2>
-		<h2>Just a minute</h2>
+		<h2>We are digging out games you are missing on Steam</h2>
+		<p>The processing time depends on game library of yours and your friends</br>Please take a minute break, then press the button below to check them out</br>Note: if no result is shown after pressing check-out button, please try to press it later because we are still processing your request.</p>
+		<a href="{% url 'recom:result' %}" class="button scrolly">Check Out</a>
 	</div>
 </header>
-<div class="content style4 featured">
-	<div class="container small">
-		<form action="/recom/submit" method="post">{% csrf_token %}
-			<div class="row half">
-				<div class="12u"><input type="text" name="steamID" value="{{ steamid }}" /></div>
-			</div>
-			<div class="row">
-				<div class="12u">
-					<ul class="actions">
-						<li><input type="submit" class="button" value="Check Now" /></li>
-						<li><input type="reset" class="button alt" value="Clear" /></li>
-					</ul>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
 {% else %}
 <header>
 	<div class="container">
