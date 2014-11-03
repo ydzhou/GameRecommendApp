@@ -13,13 +13,13 @@
 	<head>
 		<title>Games You are Missing</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="A new way to explore land of surprise on Steam" />
+		<meta name="description" content="A missing game recommender for Steam users" />
 		<meta name="keywords" content="game recommendation, steampowered, trending games, recommender" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-		<script src="{% static 'js/jquery.min.js' %}"></script>
-		<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
-		<script src="{% static 'js/skel.min.js' %}"></script>
-		<script src="{% static 'js/init.js' %}"></script>
+		<script src="{% static 'recom/js/jquery.min.js' %}"></script>
+		<script src="{% static 'recom/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'recom/js/skel.min.js' %}"></script>
+		<script src="{% static 'recom/js/init.js' %}"></script>
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 	</head>
@@ -28,8 +28,11 @@
 		<!-- Header -->
 			<section id="header" class="dark">
 				<header>
+					<!-- <div align="center">
+					<a href="http://steampowered.com" class="image cover"><img src="{% static 'recom/images/steam_logo.png' %}" alt="" width="20%" height="20%" /></a>
+					</div> -->
 					<h1>A Missing Game Recommender for Steam Users</h1>
-					<p>Recommending games your friends on steam are falling love with, while you are missing</a></p>
+					<p>Recommending games your friends on steam are falling love with, while you are missing</p>
 					</br>
 					<a href=#faq class="button scrolly">FAQ</a>
 				</header>
@@ -49,6 +52,7 @@
 				<div class="container">
 					<h3> FAQ </h3>
 					<div class="row half">
+						<ol class='default'>
 						<li>
 							<p>What is this site?</p>
 							<p>It recommends games you might be interested in from what your friends on Steam have recently played</p>
@@ -65,6 +69,7 @@
 							<p>OK, sounds good, but what is Steam?</p>
 							<p>Steam is a gaming platform. If you don't have a Steam account, go <a href="http://store.steampowered.com/">there</a> to register one. Millions of people are playing on Steam everyday. It is an awesome place for gaming. Certainly, this site has nothing to do with Steam company. It is not for commercial-purpose.</p>
 						</li>
+						</ol>
 					</div>
 				</div>
 			</div>
@@ -77,7 +82,7 @@
 				</ul>
 				<div class="copyright">
 					<ul class="menu">
-						<li>&copy; Albert Y.Zhou All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a> and Y.Zhou </li>
+						<li>&copy; Albert Y.Zhou All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a> and Y.Zhou </li> <li><a href="http://steampowered.com">Powered by Steam</a></li>		
 					</ul>
 				</div>
 			</section>

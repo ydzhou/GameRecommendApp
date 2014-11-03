@@ -12,7 +12,7 @@
 {% else %}
 <header>
 	<div class="container">
-		<h2>Sorry, we cannot process your Steam profile</h2>
+		<h2>Oops, we cannot process your Steam profile</h2>
 	</div>
 </header>
 <div class="content style4 featured">
@@ -20,12 +20,15 @@
 		<form action="/recom/submit" method="post">{% csrf_token %}
 			<div class="row">
 				<div class="12u">
-					<p> There are those possible reasons that prevent us to fetch your Steam profile: </p>
-					<ul>
-						<li>You steam ID is not valid. Please double check the ID you have typed in</li>
-						<li>You steam profile is not set to public. We cannot help you out if everything about you is secrect. :D</li>
-						<li>You dont have a friend, or dont own a game on Steam. The truth is harsh though.</li>
-					</ul>
+					<div align="left">
+					<p> It could be one of following issue that prevents us to process your Steam profile. </p>
+					<ul class="default">
+						<li>Your Steam ID is invalid. Please double check the ID you have typed in</li>
+						<li>Your Steam profile is not public. We cannot help you out if everything about you is secrect. Please change your privacy setting to be public.</li>
+						<li>You may not have any friends or games in this account. The truth is harsh though.</li>
+						<li>Steam server is down. Please try to re-type your Steam ID and check it again.</li>
+					</ul>	
+					</div>
 					<a href="{% url 'recom:recompage' %}" class="button scrolly">Re-type Steam ID</a>
 				</div>
 			</div>

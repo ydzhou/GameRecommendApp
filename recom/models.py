@@ -22,7 +22,8 @@ class App(models.Model):
     
 class User(models.Model):
     steam_id = models.CharField(max_length=17)
-    last_update = models.DateField()
+    last_update = models.DateField(default=None)
+    recommended_apps = models.ManyToManyField(App)
     def __unicode__(self):
         return self.steam_id
     

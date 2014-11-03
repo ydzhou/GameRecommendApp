@@ -9,18 +9,23 @@ import threading
 import datetime
 import os
 import json
+from recom.models import User
 
 my_steam_id = 76561198028487943
 #my_steam_id = 76561198060149220
 # HarderQ 76561198039618528
 # zjn 76561198028487943
+thread_count = 0
 
 def generate_recommended_game_info_threaded(steam_id):
     t_recom = threading.Thread(target=generate_recommended_game_info, args=(steam_id,))
-    t_recom.setDaemon(True)
+    #t_recom.setDaemon(True)
     t_recom.start()
+    global thread_count
+    thread_count = threading.active_count()
 
 def generate_recommended_game_info(steam_id):
+    
     filename = "recom_app_info.json"
     try:
         recommended_app_ids = recommend_games(steam_id)
@@ -31,19 +36,23 @@ def generate_recommended_game_info(steam_id):
             json.dump([True, recommended_app_info], f)
     except:
         with open(filename, 'w') as f:
-            json.dump([False, recommended_app_info], f)
+            json.dump([False, None], f)
     
 def get_recommended_game_info():
-    filename = "recom_app_info.json"
-    if not os.path.isfile(filename):
+    if thread_count == threading.active_count():
+        print threading.active_count()
         return [0, None]
-    with open(filename, 'r') as f:
-        res = json.loads(f.read())
-    os.remove(filename)
-    success = res[0]
-    if success == False:
+    filename = "recom_app_info.json"
+    try:
+        with open(filename, 'r') as f:
+            res = json.loads(f.read())
+        os.remove(filename)
+        success = res[0]
+        if success == False:
+            return [-1, None]
+        return [1, res[1]]
+    except:
         return [-1, None]
-    return [1, res[1]]
     
 def recommend_games(steam_id):
     recom_apps = []
@@ -98,7 +107,7 @@ def recommend_games(steam_id):
             print 'app yp: ', yp
             app_predict.append([app_id, yp])
             if yp == 1:
-                if len(recom_apps)>=10:
+                if len(recom_apps)>=3:
                     return recom_apps
                 if app_id not in recom_apps:
                     recom_apps.append(app_id)
@@ -107,7 +116,7 @@ def recommend_games(steam_id):
     recom_apps = []
     i = 0
     for app in app_predict:
-        if (i>=10): 
+        if (i>=3): 
             break
         else:
             i += 1
