@@ -66,25 +66,33 @@ def get_friends(steam_id):
 
 def get_recently_played_games(steam_id):
     # app_id, playtime_2weeks
-    app_list = getInfoFromSteam.get_recently_played_games(steam_id)
-    if app_list == None:
-        return None
+    app_list = get_owned_game_database_based(steam_id)
     res = []
     for app in app_list:
-        if app['playtime_forever']>=10 or float(app['playtime_2weeks'])/app['playtime_forever']>=0.5:
+        if app['playtime']>=10 or float(app['playtime_2weeks'])/app['playtime_forever']>=0.5:
             res.append([app['appid'], app['playtime_2weeks']])
     return res
 
 def get_all_games(steam_id):
-    app_list = getInfoFromSteam.get_owned_games(steam_id)
+    app_list = get_owned_game_database_based(steam_id)
     res = []
     for app in app_list:
         res.append(app['appid'])
     return res
 
-def get_all_games_database_based(steam_id):
+def get_owned_game_database_based(steam_id):
     try:
-        userownedgame_in_db = 
+        user_in_db = User.object.get()
+        userownedgame_in_db = UserOwnedGame.object.all().filter(user=user_in_db)
+        app_list = []
+        for uog in userownedgame_in_db:
+            app = {}
+            app['appid'] = uog.appid
+            app['playtime'] = uog.playtime
+            if uog.playtime_2weeks > 0
+            app['playtime_2weeks'] = uog.playtime_2weeks
+            app_list.append(app)
+        return app_list
     except:
         app_list = getInfoFromSteam.get_owned_games(steam_id)
         user_in_db = User
@@ -100,7 +108,7 @@ def get_all_games_database_based(steam_id):
                 playtime_2weeks = playtime_2weeks
             )
             new_userownedgame.save()
-        return app_list
+    return app_list
 
 # preferred one to manage app information
 def get_app_info_database_based(app_ids):
