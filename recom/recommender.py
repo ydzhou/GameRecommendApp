@@ -25,7 +25,6 @@ def generate_recommended_game_info_threaded(steam_id):
     thread_count = threading.active_count()
 
 def generate_recommended_game_info(steam_id):
-    
     filename = "recom_app_info.json"
     try:
         recommended_app_ids = recommend_games(steam_id)

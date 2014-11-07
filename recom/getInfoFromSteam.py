@@ -159,4 +159,4 @@ if __name__ == "__main__":
     #tstart = datetime.datetime.now()
     #get_game_details_threaded(['570','730'])
     #print datetime.datetime.now() - tstart
-    print get_game_info('570')
+    print get_owned_games(my_steam_id)

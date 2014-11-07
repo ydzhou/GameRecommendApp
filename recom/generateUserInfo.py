@@ -10,7 +10,7 @@ from recom import getInfoFromSteam
 import os
 import math
 import re
-from recom.models import App
+from recom.models import UserOwnedGame, User
 
 def get_user_info_genres_based(steam_id):
     # TODO: update user info via get_recently_played_game
@@ -81,6 +81,26 @@ def get_all_games(steam_id):
     for app in app_list:
         res.append(app['appid'])
     return res
+
+def get_all_games_database_based(steam_id):
+    try:
+        userownedgame_in_db = 
+    except:
+        app_list = getInfoFromSteam.get_owned_games(steam_id)
+        user_in_db = User
+        for app in app_list:
+            try:
+                playtime_2weeks = app['playtime_2weeks']
+            except:
+                playtime_2weeks = 0
+            new_userownedgame = UserOwnedGame(
+                user = user_in_db,
+                appid = app['appid'],
+                playtime = app['playtime'],
+                playtime_2weeks = playtime_2weeks
+            )
+            new_userownedgame.save()
+        return app_list
 
 # preferred one to manage app information
 def get_app_info_database_based(app_ids):

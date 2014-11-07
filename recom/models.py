@@ -18,17 +18,17 @@ class App(models.Model):
     #categories = models.TextField(default='NA')
     url = models.TextField(default='NA')
     def __unicode__(self):
-        return self.app_id
+        return self.appid
     
 class User(models.Model):
     steam_id = models.CharField(max_length=17)
     last_update = models.DateField(default=None)
-    recommended_apps = models.ManyToManyField(App)
+    #recommended_apps = models.ManyToManyField(App)
     def __unicode__(self):
         return self.steam_id
     
 class UserOwnedGames(models.Model):
     user = models.ForeignKey(User)
-    app = models.ManyToManyField(App)
+    appid = models.CharField(max_length=20)
     playtime = models.IntegerField()
     playtime_2weeks = models.IntegerField()

@@ -3,8 +3,6 @@ from recom.models import UserSteamIDForm
 import recommender as Recom
 import getInfoFromSteam as Info
 
-TEST = True
-
 def recompage(request):
     if request.method == 'GET':
         return render(request, 'recom/steamID.html')
