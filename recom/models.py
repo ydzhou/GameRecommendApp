@@ -22,13 +22,14 @@ class App(models.Model):
     
 class User(models.Model):
     steam_id = models.CharField(max_length=17)
-    last_update = models.DateField(default=None)
+    #last_update = models.DateField(default=None)
+    friend = models.ManyToManyField('self')
     #recommended_apps = models.ManyToManyField(App)
     def __unicode__(self):
         return self.steam_id
     
 class UserOwnedGames(models.Model):
     user = models.ForeignKey(User)
-    appid = models.CharField(max_length=20)
-    playtime = models.IntegerField()
-    playtime_2weeks = models.IntegerField()
+    appid = models.CharField(max_length=20, default='')
+    playtime = models.IntegerField(default=0)
+    playtime_2weeks = models.IntegerField(default=0)

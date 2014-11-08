@@ -1,16 +1,15 @@
 #
 # Generate Steam user's information referring to games he has recently played and owned.
 #
-
-my_steam_id = 76561198039618528
-
 from operator import itemgetter
 import json
 from recom import getInfoFromSteam
 import os
 import math
 import re
-from recom.models import UserOwnedGame, User
+from recom.models import UserOwnedGames, User, App
+
+my_steam_id = 76561198039618528
 
 def get_user_info_genres_based(steam_id):
     # TODO: update user info via get_recently_played_game
@@ -64,14 +63,51 @@ def get_friends(steam_id):
         friends.append(f['steamid'])
     return friends
 
+def get_friends_database_based(steam_id):
+    master_user = User.objects.get(steam_id__exact=steam_id)
+    friend_info_in_db = master_user.friend.all()
+    friends = []
+    if not friend_info_in_db:
+        print "Get friends via Steam Web API\n"
+        friend_info = getInfoFromSteam.get_friend_list(steam_id)
+        if friends == None:
+            return None
+        for f in friend_info:
+            new_user = User(
+                steam_id=f['steamid'],
+            )
+            new_user.save()
+            master_user.friend.add(new_user)
+            friends.append(f['steamid'])
+    else:
+        for f in friend_info_in_db:
+            friends.append(f.steam_id)
+    return friends
+
 def get_recently_played_games(steam_id):
     # app_id, playtime_2weeks
     app_list = get_owned_game_database_based(steam_id)
+    if app_list == None:
+        return None
     res = []
     for app in app_list:
-        if app['playtime']>=10 or float(app['playtime_2weeks'])/app['playtime_forever']>=0.5:
-            res.append([app['appid'], app['playtime_2weeks']])
+        try:
+            playtime_2weeks = app['playtime_2weeks']
+        except:
+            playtime_2weeks = 0
+        if app['playtime_forever'] > 0:
+            if playtime_2weeks>=10 or float(playtime_2weeks)/app['playtime_forever']>=0.5:
+                res.append([app['appid'], playtime_2weeks])
     return res
+    # non-db method
+    # app_list = getInfoFromSteam.get_recently_played_games(steam_id)
+    # if app_list==None:
+    #     return None
+    # res = []
+    # for app in app_list:
+    #     if app['playtime_forever']>=10 or float(app['playtime_2weeks'])/app['playtime_forever']>=0.5:
+    #         res.append([app['appid'], app['playtime_2weeks']])
+    # return res
 
 def get_all_games(steam_id):
     app_list = get_owned_game_database_based(steam_id)
@@ -79,35 +115,40 @@ def get_all_games(steam_id):
     for app in app_list:
         res.append(app['appid'])
     return res
+    # non-db method
+    # app_list = getInfoFromSteam.get_owned_games(steam_id)
+    # res = []
+    # for app in app_list:
+    #     res.append(app['appid'])
+    # return res
 
 def get_owned_game_database_based(steam_id):
-    try:
-        user_in_db = User.object.get()
-        userownedgame_in_db = UserOwnedGame.object.all().filter(user=user_in_db)
-        app_list = []
-        for uog in userownedgame_in_db:
-            app = {}
-            app['appid'] = uog.appid
-            app['playtime'] = uog.playtime
-            if uog.playtime_2weeks > 0
-            app['playtime_2weeks'] = uog.playtime_2weeks
-            app_list.append(app)
-        return app_list
-    except:
+    user_in_db = User.objects.get(steam_id__exact=steam_id)
+    userownedgame_in_db = UserOwnedGames.objects.all().filter(user=user_in_db)
+    app_list = []
+    if not userownedgame_in_db:
+        print "Fetch owned games via Steam Web API\n"
         app_list = getInfoFromSteam.get_owned_games(steam_id)
-        user_in_db = User
         for app in app_list:
             try:
                 playtime_2weeks = app['playtime_2weeks']
             except:
                 playtime_2weeks = 0
-            new_userownedgame = UserOwnedGame(
+            new_userownedgame = UserOwnedGames(
                 user = user_in_db,
                 appid = app['appid'],
-                playtime = app['playtime'],
+                playtime = app['playtime_forever'],
                 playtime_2weeks = playtime_2weeks
             )
             new_userownedgame.save()
+    else:
+        for uog in userownedgame_in_db:
+            app = {}
+            app['appid'] = uog.appid
+            app['playtime_forever'] = uog.playtime
+            if uog.playtime_2weeks > 0:
+                app['playtime_2weeks'] = uog.playtime_2weeks
+            app_list.append(app)
     return app_list
 
 # preferred one to manage app information
