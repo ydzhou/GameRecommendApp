@@ -91,6 +91,9 @@ def recommend_games(steam_id):
     #print err/11
 
     owned_apps = G.get_all_games(steam_id)
+    if owned_apps == None:
+        print "WARNING: User ownes 0 games\n"
+        return recom_apps
     tstart = datetime.datetime.now()
     trending_apps = get_trending_games_played_by_friends(steam_id, 20)
     print datetime.datetime.now() - tstart
@@ -140,7 +143,7 @@ def recommend_games(steam_id):
     return recom_apps
     
 def get_trending_games_played_by_friends(steam_id, num_of_friend):
-    friends = G.get_friends_database_based(steam_id)
+    friends = G.get_friends_database_based(steam_id, num_of_friend)
     if friends == None:
         return None
     all_apps = {}

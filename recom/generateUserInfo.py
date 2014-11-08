@@ -63,16 +63,21 @@ def get_friends(steam_id):
         friends.append(f['steamid'])
     return friends
 
-def get_friends_database_based(steam_id):
+def get_friends_database_based(steam_id, num_of_friend):
     master_user = User.objects.get(steam_id__exact=steam_id)
     friend_info_in_db = master_user.friend.all()
     friends = []
+    i = 0
     if not friend_info_in_db:
         print "Get friends via Steam Web API\n"
         friend_info = getInfoFromSteam.get_friend_list(steam_id)
         if friends == None:
             return None
         for f in friend_info:
+            if i==num_of_friend:
+                break
+            else:
+                i += 1
             new_user = User(
                 steam_id=f['steamid'],
             )
@@ -81,6 +86,10 @@ def get_friends_database_based(steam_id):
             friends.append(f['steamid'])
     else:
         for f in friend_info_in_db:
+            if i==num_of_friend:
+                break
+            else:
+                i += 1
             friends.append(f.steam_id)
     return friends
 
@@ -111,6 +120,8 @@ def get_recently_played_games(steam_id):
 
 def get_all_games(steam_id):
     app_list = get_owned_game_database_based(steam_id)
+    if app_list == None:
+        return None
     res = []
     for app in app_list:
         res.append(app['appid'])
@@ -129,6 +140,8 @@ def get_owned_game_database_based(steam_id):
     if not userownedgame_in_db:
         print "Fetch owned games via Steam Web API\n"
         app_list = getInfoFromSteam.get_owned_games(steam_id)
+        if app_list == None:
+            return None
         for app in app_list:
             try:
                 playtime_2weeks = app['playtime_2weeks']

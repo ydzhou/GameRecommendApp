@@ -20,7 +20,10 @@ def get_owned_games(steam_id):
     response = urllib2.urlopen(req)
     the_page = response.read()
     res = json.loads(the_page)
-    return res['response']['games']
+    try:
+        return res['response']['games']
+    except:
+        return None
 
 def get_recently_played_games(steam_id):
     steam_id = str(steam_id)
