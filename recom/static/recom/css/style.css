@@ -297,40 +297,6 @@
 				padding-left: 0.5em;
 			}		
 
-		ul.icons
-		{
-			cursor: default;
-		}	
-		
-			ul.icons li
-			{
-				display: inline-block;
-				padding-left: 0.75em;
-			}
-			
-				ul.icons a
-				{
-					display: inline-block;
-					width: 2.75em;
-					height: 2.75em;
-					line-height: 2.8em;
-					text-align: center;
-					border: 0;
-					box-shadow: inset 0 0 0 1px #e6e6e6;
-					border-radius: 100%;
-					color: #aaa;
-					-moz-transition: background-color 0.25s ease-in-out;
-					-webkit-transition: background-color 0.25s ease-in-out;
-					-o-transition: background-color 0.25s ease-in-out;
-					-ms-transition: background-color 0.25s ease-in-out;
-					transition: background-color 0.25s ease-in-out;
-				}
-
-					ul.icons a:hover
-					{
-						background: rgba(0,0,0,0.025);
-					}
-
 		ul.menu
 		{
 			cursor: default;
@@ -349,22 +315,6 @@
 			{
 				border-left: 0;
 				padding-left: 0;
-				margin-left: 0;
-			}
-
-		ul.actions
-		{
-			cursor: default;
-		}
-		
-			ul.actions li
-			{
-				display: inline-block;
-				margin: 0 0 0 0.5em;
-			}
-			
-			ul.actions li:first-child
-			{
 				margin-left: 0;
 			}
 
@@ -546,79 +496,6 @@
 			.dark form :-moz-placeholder { color: rgba(255,255,255,0.85) !important; }
 			.dark form ::-moz-placeholder { color: rgba(255,255,255,0.85) !important; }
 			.dark form :-ms-input-placeholder { color: rgba(255,255,255,0.85) !important; }
-			
-	/* Table */
-	
-		table
-		{
-			width: 100%;
-		}
-		
-			table.default
-			{
-				width: 100%;
-				border-collapse: collapse;
-			}
-
-				table.default tbody
-				{
-				}
-
-				table.default tbody tr
-				{
-					border: solid 1px #e6e6e6;
-				}
-			
-				table.default tbody tr:nth-child(2n+2)
-				{
-					background: #f8f8f8;
-				}
-				
-				table.default td
-				{
-					padding: 0.5em 1em 0.5em 1em;
-				}
-				
-				table.default th
-				{
-					text-align: left;
-					padding: 0.5em 1em 1em 1em;
-				}
-			
-				table.default thead
-				{
-				}
-
-				table.default tfoot
-				{
-				}
-				
-					table.default tfoot td
-					{
-						padding-top: 1em;
-					}
-				
-				table.default tbody
-				{
-				}
-
-			.dark table.default
-			{
-			}
-
-				.dark table.default tbody
-				{
-				}
-			
-					.dark table.default tbody tr
-					{
-						border-color: rgba(255,255,255,0.5);
-					}
-				
-					.dark table.default tbody tr:nth-child(2n+2)
-					{
-						background: rgba(255,255,255,0.1);
-					}
 	
 	/* Button */
 		
@@ -705,76 +582,6 @@
 				{
 					background: rgba(255,255,255,0.15);
 					box-shadow: inset 0 0 0 1px #fff;
-				}
-
-	/* Feature Icon */
-
-		.feature-icon
-		{
-			display: inline-block;
-			position: relative;
-			padding-bottom: 5em;
-			margin-bottom: 2.75em;
-			cursor: default;
-		}
-		
-			.feature-icon .icon
-			{
-				display: inline-block;
-				width: 2em;
-				height: 2em;
-				font-size: 4.5em;
-				border-radius: 100%;
-				box-shadow: inset 0 0 0 1px #666;
-				color: #666;
-				line-height: 2.1em;
-			}
-		
-			.feature-icon:before
-			{
-				content: '';
-				background: #666;
-				position: absolute;
-				bottom: 0;
-				left: 50%;
-				margin-left: -0.325em;
-				width: 0.65em;
-				height: 0.65em;
-				display: block;
-				border-radius: 100%;
-			}
-
-			.feature-icon:after
-			{
-				content: '';
-				position: absolute;
-				left: 50%;
-				bottom: 0.65em;
-				width: 1px;
-				height: 4.35em;
-				background: #666;
-				margin-left: -0.5px;
-			}
-
-			.dark .feature-icon
-			{
-			}
-
-				.dark .feature-icon .icon
-				{
-					background: rgba(255,255,255,0.15);
-					box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
-					color: #fff;
-				}
-			
-				.dark .feature-icon:before
-				{
-					background: rgba(255,255,255,0.5);
-				}
-
-				.dark .feature-icon:after
-				{
-					background: rgba(255,255,255,0.5);
 				}
 
 	/* Dark */
@@ -926,20 +733,6 @@
 							linear-gradient(45deg, #b39c68, #a56365, #412e4c);
 			}
 
-			.main > .content.style2
-			{
-				background:	url('images/bgtr.svg') top right no-repeat,
-							url('images/bgbl.svg') bottom left no-repeat,
-							url('images/overlay.png'),
-							linear-gradient(45deg, #384955, #655361, #85505f);
-			}
-
-			.main > .content.style3
-			{
-				background:	url('images/bgtr.svg') top right no-repeat,
-							url('images/bgbl.svg') bottom left no-repeat,
-							url('images/overlay.png'),
-							linear-gradient(45deg, #5f796b, #3a4e59, #2f394e);
 			}
 
 			.main > .content.style4

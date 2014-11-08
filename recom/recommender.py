@@ -193,7 +193,10 @@ def generate_IR_training_data(steam_id):
         for i in range(total_num_of_genres_ids):
             xt_app.append(0)
         for app_genres in app_detail:
-            genres_id = app_genres['id']
+            try:
+                genres_id = app_genres['id']
+            except:
+                continue
             pos = G.get_genres_index(genres_id, 1)
             if pos >= 0:
                 xt_app[pos] = 1
