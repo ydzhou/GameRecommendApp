@@ -30,6 +30,7 @@ def generate_recommended_game_info(steam_id):
     except:
         new_user = User(
             steam_id=steam_id,
+            visited=0,
             #last_update=datetime.datetime.now()
         )
         new_user.save()

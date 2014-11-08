@@ -22,6 +22,7 @@ class App(models.Model):
     
 class User(models.Model):
     steam_id = models.CharField(max_length=17)
+    visited = models.IntegerField(default=0)
     #last_update = models.DateField(default=None)
     friend = models.ManyToManyField('self')
     #recommended_apps = models.ManyToManyField(App)

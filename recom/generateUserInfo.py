@@ -68,7 +68,7 @@ def get_friends_database_based(steam_id, num_of_friend):
     friend_info_in_db = master_user.friend.all()
     friends = []
     i = 0
-    if not friend_info_in_db:
+    if master_user.visited == 0:
         print "Get friends via Steam Web API\n"
         friend_info = getInfoFromSteam.get_friend_list(steam_id)
         if friends == None:
@@ -81,9 +81,17 @@ def get_friends_database_based(steam_id, num_of_friend):
             new_user = User(
                 steam_id=f['steamid'],
             )
-            new_user.save()
-            master_user.friend.add(new_user)
+            try:
+                new_user_exisits_check = User.objects.get(steam_id__exact=f['steamid'])
+            except:
+                new_user.save()
+            try:
+                master_user.friend.add(new_user)
+            except:
+                continue
             friends.append(f['steamid'])
+            master_user.visited = 1
+            master_user.save()
     else:
         for f in friend_info_in_db:
             if i==num_of_friend:
