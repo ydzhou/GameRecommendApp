@@ -11,21 +11,11 @@ from recom.models import UserOwnedGames, User, App
 
 my_steam_id = 76561198039618528
 
-def get_user_info_genres_based(steam_id):
+def get_user_info_genres_based(steam_id, num_of_games):
     # TODO: update user info via get_recently_played_game
     #       try to update playtime and inventory
     #       need time stamp to update playtime_2weeks
     steam_id = str(steam_id)
-    # filename = './data/user_info.json'
-    # if os.path.isfile(filename):
-    #     with open(filename, 'r') as f:
-    #         for line in f:
-    #             try:
-    #                 user_info = json.loads(line.strip())
-    #             except:
-    #                 continue
-    #             if steam_id in user_info:
-    #                 return user_info[steam_id]
     owned_games = getInfoFromSteam.get_owned_games(steam_id)
     user_info = []
     max_playtime = 0
@@ -36,25 +26,28 @@ def get_user_info_genres_based(steam_id):
             playtime_2weeks = app['playtime_2weeks']
         else:
             playtime_2weeks = 0
-        app_detail = get_app_details_database_based(app_id)
-        if app_detail == None:
-            continue
-        app_info = [app_id, playtime_2weeks, playtime, app_detail]
+        #app_detail = get_app_details_database_based(app_id)
+        #if app_detail == None:
+            #continue
+        app_info = [app_id, playtime_2weeks, playtime]
         user_info.append(app_info)
         max_playtime = max(max_playtime, playtime)
     
     if max_playtime == 0:
         return None
     
-    user_info.sort(key=itemgetter(2))
-    user_info_t = user_info
-    #for u in user_info:
-    #    if float(u[2])/max_playtime >= 0 or u[1] > 0:
-    #        user_info_t.append(u)
-    #with open(filename, 'a') as f:
-    #    f.write("\n")
-    #    json.dump({steam_id : user_info}, f)
-    return user_info_t
+    user_info.sort(key=itemgetter(2), reverse=True)
+    
+    user_info = user_info[0:num_of_games]
+    res = []
+    for u in user_info:
+        app_id = u[0]
+        app_detail = get_app_details_database_based(app_id)
+        if app_detail == None:
+            continue
+        u.append(app_detail)
+        res.append(u)
+    return res
 
 def get_friends(steam_id):
     friend_info = getInfoFromSteam.get_friend_list(steam_id)
@@ -279,7 +272,6 @@ def get_genres_index(genres_id, flag):
     return genres_ids[genres_id]
 
 if __name__ == "__main__":
-    generate_IR_training_data(my_steam_id)
     #get_recently_played_games(my_steam_id)
-    #print get_user_info_genres_based(my_steam_id)
+    print get_user_info_genres_based(my_steam_id, 30)
     #print get_app_details('550')

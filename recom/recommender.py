@@ -54,6 +54,7 @@ def get_recommended_game_info():
         print threading.active_count()
         return [0, None]
     try:
+        filename = "recom_app_info.json"
         with open(filename, 'r') as f:
             res = json.loads(f.read())
         os.remove(filename)
@@ -71,7 +72,7 @@ def recommend_games(steam_id):
     
     recom_apps = []
     
-    [xt, yt] = generate_IR_training_data(steam_id)
+    [xt, yt] = generate_IR_training_data(steam_id, 40)
     
     if xt == None or yt == None:
         print "ERROR: Failed to generate IR training data\n"
@@ -83,8 +84,8 @@ def recommend_games(steam_id):
     
     recom = GaussianNB()
     recom.fit(xt, yt)
-    #yp_t = recom.predict(xt)
-    #print yp_t
+    yp_t = recom.predict(xt)
+    print yp_t
     
     #err = 0
     #for i in range(len(yt)):
@@ -96,7 +97,7 @@ def recommend_games(steam_id):
         print "WARNING: User ownes 0 games\n"
         return recom_apps
     tstart = datetime.datetime.now()
-    trending_apps = get_trending_games_played_by_friends(steam_id, 20)
+    trending_apps = get_trending_games_played_by_friends(steam_id, 10)
     print datetime.datetime.now() - tstart
     
     if trending_apps == None:
@@ -170,12 +171,12 @@ def get_trending_games_played_by_friends(steam_id, num_of_friend):
     res = [a[0] for a in sorted_all_apps]
     return res
     
-def generate_IR_training_data(steam_id):
+def generate_IR_training_data(steam_id, num_of_games):
     xt = [] # input vector for training
     yt = [] # target vector for training
 
     steam_id = str(steam_id)
-    app_info = G.get_user_info_genres_based(steam_id)
+    app_info = G.get_user_info_genres_based(steam_id, num_of_games)
     if app_info == None:
         return [None, None]
 
@@ -183,9 +184,9 @@ def generate_IR_training_data(steam_id):
     
     owned_genres_bitvec_single = []
     
+    i = 0
     # sum up playtime of all the apps with same genres pattern
     app_info_re = {}
-    
     for app in app_info:
         app_id = app[0]
         app_detail = app[3]
