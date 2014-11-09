@@ -15,12 +15,11 @@
 		<h2>Oops, we cannot process your Steam profile</h2>
 	</div>
 </header>
-<div class="content style4 featured">
+<div class="content style4 feature">
 	<div class="container small">
-		<form action="/recom/submit" method="post">{% csrf_token %}
-			<div class="row">
-				<div class="12u">
-					<div align="left">
+		<div class="row">
+			<div class="12u">
+				<div align="left">
 					<p> It could be one of following issue that prevents us to process your Steam profile. </p>
 					<ul class="default">
 						<li>Your Steam ID is invalid. Please double check the ID you have typed in</li>
@@ -28,11 +27,10 @@
 						<li>You may not have any friends or games in this account. The truth is harsh though.</li>
 						<li>Steam server is down. Please try to re-type your Steam ID and check it again.</li>
 					</ul>	
-					</div>
-					<a href="{% url 'recom:recompage' %}" class="button scrolly">Re-type Steam ID</a>
 				</div>
+				<a href="{% url 'recom:recompage' %}" class="button scrolly">Re-type Steam ID</a>
 			</div>
-		</form>
+		</div>
 	</div>
 </div>
 {% endif %}

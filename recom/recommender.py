@@ -53,7 +53,6 @@ def get_recommended_game_info():
     if thread_count == threading.active_count():
         print threading.active_count()
         return [0, None]
-    filename = "recom_app_info.json"
     try:
         with open(filename, 'r') as f:
             res = json.loads(f.read())

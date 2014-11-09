@@ -180,10 +180,9 @@ def get_app_info_database_based(app_ids):
         try:
             app_info_in_db = App.objects.get(appid__exact=app_id)
             app_info = {}
-            app_info['app_id'] = app_info_in_db.appid
-            app_info['name'] = app_info_in_db.name
-            print app_info_in_db.name
-            if app_info['name'] != 'NA':
+            if app_info_in_db.visited == 1:
+                app_info['app_id'] = app_info_in_db.appid
+                app_info['name'] = app_info_in_db.name
                 print "Fetch recom app info in Database"
                 app_info['descript'] = app_info_in_db.descript
                 app_info['img'] = app_info_in_db.img
@@ -196,6 +195,7 @@ def get_app_info_database_based(app_ids):
                 # app genres exists but other info missing
                 print "Fetch recom app info via Steam Web API"
                 app_info = getInfoFromSteam.get_game_info(app_id)
+                app_info_in_db.visited=1
                 app_info_in_db.name=app_info['name']
                 app_info_in_db.descript=app_info['descript']
                 app_info_in_db.img=app_info['img']
@@ -249,13 +249,21 @@ def get_app_details_database_based(app_id):
     app_id = str(app_id)
     try:
         app_info_in_db = App.objects.get(appid__exact=app_id)
+        if app_info_in_db.visited == -1:
+            return None
         app_detail = json.loads(app_info_in_db.genres)
     except:
         app_detail = getInfoFromSteam.get_game_details(app_id)
         if app_detail == None:
+            new_app = App(
+                appid=app_id,
+                visited=-1,
+            )
+            new_app.save()
             return None
         new_app = App(
             appid=app_id,
+            visited=0,
             genres=json.dumps(app_detail),
         )
         new_app.save()

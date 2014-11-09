@@ -8,11 +8,12 @@ class UserSteamIDForm(forms.Form):
 
 class App(models.Model):
     appid = models.CharField(max_length=20)
+    visited = models.IntegerField(default=0)
     name = models.CharField(max_length=100, default='NA')
     descript = models.TextField(default='NA')
     img = models.TextField(default='NA')
     score = models.IntegerField(default=0)
-    genres = models.CharField(max_length=2000, default='{success:False}')
+    genres = models.TextField(default='{success:False}')
     publisher = models.CharField(max_length=100, default='NA')
     release_date = models.CharField(max_length=50, default='NA')
     #categories = models.TextField(default='NA')
@@ -25,7 +26,7 @@ class User(models.Model):
     visited = models.IntegerField(default=0)
     #last_update = models.DateField(default=None)
     friend = models.ManyToManyField('self')
-    #recom_apps = models.CharField(max_length=200, default='[False]')
+    recom_apps = models.TextField(default='[-1]')
     def __unicode__(self):
         return self.steam_id
     
