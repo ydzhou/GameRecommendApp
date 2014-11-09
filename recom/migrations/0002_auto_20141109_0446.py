@@ -7,14 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('recom', '0004_remove_user_last_update'),
+        ('recom', '0001_initial'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='user',
-            name='visited',
-            field=models.IntegerField(default=0),
+        migrations.AlterField(
+            model_name='app',
+            name='genres',
+            field=models.CharField(default=b'{success:False}', max_length=2000),
             preserve_default=True,
         ),
     ]

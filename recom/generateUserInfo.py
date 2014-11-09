@@ -36,7 +36,7 @@ def get_user_info_genres_based(steam_id):
             playtime_2weeks = app['playtime_2weeks']
         else:
             playtime_2weeks = 0
-        app_detail = get_app_details(app_id)
+        app_detail = get_app_details_database_based(app_id)
         if app_detail == None:
             continue
         app_info = [app_id, playtime_2weeks, playtime, app_detail]
@@ -182,13 +182,32 @@ def get_app_info_database_based(app_ids):
             app_info = {}
             app_info['app_id'] = app_info_in_db.appid
             app_info['name'] = app_info_in_db.name
-            app_info['descript'] = app_info_in_db.descript
-            app_info['img'] = app_info_in_db.img
-            app_info['publisher'] = app_info_in_db.publisher
-            app_info['release_date'] = app_info_in_db.release_date
-            app_info['score'] = app_info_in_db.score
-            app_info['url'] = app_info_in_db.url
+            print app_info_in_db.name
+            if app_info['name'] != 'NA':
+                print "Fetch recom app info in Database"
+                app_info['descript'] = app_info_in_db.descript
+                app_info['img'] = app_info_in_db.img
+                app_info['publisher'] = app_info_in_db.publisher
+                app_info['release_date'] = app_info_in_db.release_date
+                app_info['score'] = app_info_in_db.score
+                app_info['url'] = app_info_in_db.url
+                #apps_info.append(app_info)
+            else:
+                # app genres exists but other info missing
+                print "Fetch recom app info via Steam Web API"
+                app_info = getInfoFromSteam.get_game_info(app_id)
+                app_info_in_db.name=app_info['name']
+                app_info_in_db.descript=app_info['descript']
+                app_info_in_db.img=app_info['img']
+                app_info_in_db.publisher=app_info['publisher']
+                app_info_in_db.release_date=app_info['release_date']
+                app_info_in_db.score=app_info['score']
+                app_info_in_db.url=app_info['url']
+                app_info_in_db.save()
+                #apps_info.append(app_info)
         except:
+            # app is not stored in DB
+            print "App not in DB and Fetch recom app info via Steam Web API"
             app_info = getInfoFromSteam.get_game_info(app_id)
             new_app = App(
                 appid=app_info['app_id'],
@@ -224,6 +243,23 @@ def get_app_details(app_id):
         f.write("\n")
         json.dump(app_detail, f)
     return app_detail[app_id]
+    
+def get_app_details_database_based(app_id):
+    # return app genres
+    app_id = str(app_id)
+    try:
+        app_info_in_db = App.objects.get(appid__exact=app_id)
+        app_detail = json.loads(app_info_in_db.genres)
+    except:
+        app_detail = getInfoFromSteam.get_game_details(app_id)
+        if app_detail == None:
+            return None
+        new_app = App(
+            appid=app_id,
+            genres=json.dumps(app_detail),
+        )
+        new_app.save()
+    return app_detail
 
 def get_genres_index(genres_id, flag):
     with open('./data/genres_id.json', 'r') as f:

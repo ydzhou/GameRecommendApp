@@ -41,6 +41,7 @@ def generate_recommended_game_info(steam_id):
     recommended_app_ids = recommend_games(steam_id)
     recommended_app_info = G.get_app_info_database_based(recommended_app_ids)
     print "DONE\n"
+    print recommended_app_ids
     with open(filename, 'w') as f:
         json.dump([True, recommended_app_info], f)
     #except:
@@ -108,7 +109,7 @@ def recommend_games(steam_id):
     for app_id in trending_apps:
         if app_id in owned_apps:
             continue
-        app_details = G.get_app_details(app_id)
+        app_details = G.get_app_details_database_based(app_id)
         if app_details == None: continue
         shared_genres = 0
         xp = []

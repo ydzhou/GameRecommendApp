@@ -15,11 +15,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('appid', models.CharField(max_length=20)),
-                ('name', models.CharField(max_length=100)),
-                ('descript', models.TextField()),
-                ('img', models.TextField()),
-                ('score', models.IntegerField()),
-                ('genres', models.CharField(default=b'[]', max_length=200)),
+                ('name', models.CharField(default=b'NA', max_length=100)),
+                ('descript', models.TextField(default=b'NA')),
+                ('img', models.TextField(default=b'NA')),
+                ('score', models.IntegerField(default=0)),
+                ('genres', models.TextField(default=b'{success:False}')),
                 ('publisher', models.CharField(default=b'NA', max_length=100)),
                 ('release_date', models.CharField(default=b'NA', max_length=50)),
                 ('url', models.TextField(default=b'NA')),
@@ -33,7 +33,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('steam_id', models.CharField(max_length=17)),
-                ('last_update', models.DateField()),
+                ('visited', models.IntegerField(default=0)),
+                ('friend', models.ManyToManyField(related_name='friend_rel_+', to='recom.User')),
             ],
             options={
             },
@@ -43,9 +44,9 @@ class Migration(migrations.Migration):
             name='UserOwnedGames',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('playtime', models.IntegerField()),
-                ('playtime_2weeks', models.IntegerField()),
-                ('app', models.ManyToManyField(to='recom.App')),
+                ('appid', models.CharField(default=b'', max_length=20)),
+                ('playtime', models.IntegerField(default=0)),
+                ('playtime_2weeks', models.IntegerField(default=0)),
                 ('user', models.ForeignKey(to='recom.User')),
             ],
             options={
