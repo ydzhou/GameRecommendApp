@@ -21,4 +21,4 @@ People only spend time on things they love to do. When your friends play hundred
 It's not water, buddy.
 
 * Give me some spec on this application.
-This application is built upon Django framework. It has been deployed on Heroku. Its recommender is a SVM-based information retrieval program written in Python. It fetches game information from users' Steam profile via Steam Web API to train SVM. The game and user information is stored in a Postgres database for future re-use.
+This application is built upon Django framework. It has been deployed on Heroku. Its recommender is a naive-bayes-classifier-based information retrieval program written in Python. It fetches game information from users' Steam profile via Steam Web API to train naive bayes classifier. The game and user information is stored in a Postgres database for future re-use.
