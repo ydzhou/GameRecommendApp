@@ -12,7 +12,6 @@ import json
 from recom.models import User
 
 my_steam_id = 76561198028487943
-#my_steam_id = 76561198060149220
 # HarderQ 76561198039618528
 # zjn 76561198028487943
 thread_count = 0
@@ -34,7 +33,7 @@ def generate_recommended_game_info(steam_id):
             #last_update=datetime.datetime.now()
         )
         new_user.save()
-    print "generate recommended games\n"
+    print "generate recommended games for " + steam_id + "\n"
     filename = "recom_app_info.json"
     #try:
     print "recommending app..."
@@ -99,6 +98,9 @@ def recommend_games(steam_id):
     tstart = datetime.datetime.now()
     trending_apps = get_trending_games_played_by_friends(steam_id, 10)
     print datetime.datetime.now() - tstart
+
+    trending_apps = [app_id for app_id in trending_apps if app_id not in owned_apps]
+    print trending_apps
     
     if trending_apps == None:
         print "WARNING: No trending apps available\n"
@@ -107,10 +109,9 @@ def recommend_games(steam_id):
     app_predict = []
     tstart = datetime.datetime.now()
     for app_id in trending_apps:
-        if app_id in owned_apps:
-            continue
         app_details = G.get_app_details_database_based(app_id)
-        if app_details == None: continue
+        if app_details == None:
+            continue
         shared_genres = 0
         xp = []
         for i in range(G.get_genres_index("", 2)):
